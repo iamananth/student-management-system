@@ -39,6 +39,8 @@ namespace student_management_system
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            string user = (string)Session["uname"];
+            sesslbl.Text = user;
 
         }
 
@@ -67,6 +69,7 @@ namespace student_management_system
                     cmd.Parameters.AddWithValue("@name",txtname.Text);
                     cmd.Parameters.AddWithValue("@email", txtemail.Text);
                     cmd.Parameters.AddWithValue("@gender", txtgender.Text);
+                    txtdob.Text = Calendar1.SelectedDate.ToString();
                     cmd.Parameters.AddWithValue("@birthdate", txtdob.Text);
                     cmd.ExecuteNonQuery();
                     con.Close();
@@ -91,6 +94,7 @@ namespace student_management_system
                     cmd.Parameters.AddWithValue("@name", txtname.Text);
                     cmd.Parameters.AddWithValue("@email", txtemail.Text);
                     cmd.Parameters.AddWithValue("@gender", txtgender.Text);
+                    txtdob.Text = Calendar1.SelectedDate.ToString();
                     cmd.Parameters.AddWithValue("@birthdate", txtdob.Text);
                     cmd.Parameters.AddWithValue("@studentid", lblsid.Text);
                     cmd.ExecuteNonQuery();
@@ -122,6 +126,22 @@ namespace student_management_system
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             ClearAllData();
+        }
+
+        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (Calendar1.Visible)
+            {
+                txtdob.Text = Calendar1.SelectedDate.ToString();
+            }
+               
+
+        }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("Default.aspx");
         }
     }
 }
